@@ -1,19 +1,28 @@
 package com.utn.temptoothlauria.activities
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.ekn.gruzer.gaugelibrary.Range
 import com.ingenieriajhr.blujhr.BluJhr
 import com.utn.temptoothlauria.R
+import com.utn.temptoothlauria.viewmodels.BthViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.android.synthetic.main.activity_bth.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class BthActivity : AppCompatActivity() {
+    private val viewModel : BthViewModel by viewModels()
 
     lateinit var blue : BluJhr
     var measCount : Int = 0
@@ -23,40 +32,44 @@ class BthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bth)
 
-        val range1 = Range()
-        range1.color = Color.parseColor("#a60000")
-        range1.from = 0.0
-        range1.to = 50.0
-        temp1.addRange(range1)
+        // Set the ranges for gauges
+        temp1.addRange(viewModel.getRange1())
         temp1.minValue = 0.0
         temp1.maxValue = 50.0
         temp1.value = 0.0
 
-        val range2 = Range()
-        range2.color = Color.parseColor("#befbef")
-        range2.from = 0.0
-        range2.to = 50.0
-        hum1.addRange(range2)
+        hum1.addRange(viewModel.getRange2())
         hum1.minValue = 0.0
         hum1.maxValue = 100.0
         hum1.value = 0.0
 
-        temp2.addRange(range1)
+        temp2.addRange(viewModel.getRange1())
         temp2.minValue = 0.0
         temp2.maxValue = 50.0
         temp2.value = 0.0
-        hum2.addRange(range2)
+        hum2.addRange(viewModel.getRange2())
         hum2.minValue = 0.0
         hum2.maxValue = 100.0
         hum2.value = 0.0
 
+        // Bluetooth app
         blue = BluJhr(this)
         blue.onBluetooth()
 
+        // Btn to go back because backPress is bugged
         btnBack.setOnClickListener {
             this.onBackPressed()
             //blue.updateStateConnectBluetooth(BluJhr.Connected.Disconnect)
             blue.closeConnection()
+        }
+
+        val parentJob = Job()
+        val scope = CoroutineScope(Dispatchers.Default + parentJob)
+
+        btnUpload.setOnClickListener {
+            scope.launch {
+                viewModel.setDataToFirestore()
+            }
         }
 
         listDeviceBluetooth.setOnItemClickListener { adapterView, view, i, l ->
@@ -100,26 +113,22 @@ class BthActivity : AppCompatActivity() {
                 //consola.text = rx
                 //sensorShow.text = rx
 
-                var list : List<String> = rx.split(",")
+                viewModel.setListString(rx)
+                viewModel.uploadValues()
 
-                if (list.isNullOrEmpty() || list.size < 7)
-                //sensorShow.text = "ERROR"
-                else if ((list[0] != "$" && list[6] != "#"))
-                //sensorShow.text = "ERROR"
-                else if (list[1] == "S1") {
-                    sensorShow.text = "#SENSOR1: T = ${list[3]}°C H = ${list[5]} \n"
-                    temp1.value = list[3].toDouble()
-                    hum1.value = list[5].toDouble()
-                }
-                else if (list[1] == "S2") {
-                    sensorShow.text = sensorShow.text.toString() + "#SENSOR2: T = ${list[3]}°C H = ${list[5]} \n"
-                    temp2.value = list[3].toDouble()
-                    hum2.value = list[5].toDouble()
-                    measCount++
-                    measureCount.text = measCount.toString()
-                }
-                else
-                    sensorShow.text = "ERROR"
+                viewModel.temp1.observe(this@BthActivity, Observer {
+                    temp1.value = it
+                })
+                viewModel.hum1.observe(this@BthActivity, Observer {
+                    hum1.value = it
+                })
+                viewModel.temp2.observe(this@BthActivity, Observer {
+                    temp2.value = it
+                })
+                viewModel.hum2.observe(this@BthActivity, Observer {
+                    hum2.value = it
+                })
+
             }
         })
     }

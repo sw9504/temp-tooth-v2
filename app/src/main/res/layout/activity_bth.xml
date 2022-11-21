@@ -75,15 +75,14 @@
             app:layout_constraintTop_toTopOf="@+id/bottomGuide" />
 
         <TextView
+            android:id="@+id/measureCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/measureCount"
             android:text="Measure count = 0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sensorShow"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sensorShow" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/bottomGuide"
@@ -91,6 +90,20 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_end="208dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="250dp"
+            android:layout_marginTop="500dp"
+            android:backgroundTint="#01579B"
+            android:clickable="true"
+            android:src="@drawable/ic_upload"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
