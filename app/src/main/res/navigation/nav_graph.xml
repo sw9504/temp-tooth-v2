@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.utn.temptoothlauria.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_recoveryFragment"
+            app:destination="@id/recoveryFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_createAccFragment"
+            app:destination="@id/createAccFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_selectorFragment"
+            app:destination="@id/selectorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccFragment"
+        android:name="com.utn.temptoothlauria.fragments.CreateAccFragment"
+        android:label="fragment_create_acc"
+        tools:layout="@layout/fragment_create_acc" />
+    <fragment
+        android:id="@+id/recoveryFragment"
+        android:name="com.utn.temptoothlauria.fragments.RecoveryFragment"
+        android:label="fragment_recovery"
+        tools:layout="@layout/fragment_recovery" />
+    <fragment
+        android:id="@+id/selectorFragment"
+        android:name="com.utn.temptoothlauria.fragments.SelectorFragment"
+        android:label="fragment_selector"
+        tools:layout="@layout/fragment_selector" >
+        <action
+            android:id="@+id/action_selectorFragment_to_listFragment"
+            app:destination="@id/listFragment" />
+        <action
+            android:id="@+id/action_selectorFragment_to_avatarFragment"
+            app:destination="@id/avatarFragment" />
+        <action
+            android:id="@+id/action_selectorFragment_to_bthActivity"
+            app:destination="@id/bthActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/bthActivity"
+        android:name="com.utn.temptoothlauria.activities.BthActivity"
+        android:label="activity_bth"
+        tools:layout="@layout/activity_bth" />
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.utn.temptoothlauria.fragments.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_listFragment_to_expandedFragment"
+            app:destination="@id/expandedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/avatarFragment"
+        android:name="com.utn.temptoothlauria.fragments.AvatarFragment"
+        android:label="fragment_avatar"
+        tools:layout="@layout/fragment_avatar" />
+    <fragment
+        android:id="@+id/expandedFragment"
+        android:name="com.utn.temptoothlauria.fragments.ExpandedFragment"
+        android:label="fragment_expanded"
+        tools:layout="@layout/fragment_expanded" />
+</navigation>

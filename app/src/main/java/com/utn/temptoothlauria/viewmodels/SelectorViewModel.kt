@@ -1,4 +1,4 @@
-package com.utn.temptoothlauria.fragments
+package com.utn.temptoothlauria.viewmodels
 
 import androidx.lifecycle.ViewModel
 

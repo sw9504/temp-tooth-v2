@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import com.utn.temptoothlauria.R
+import com.utn.temptoothlauria.databinding.FragmentCreateAccBinding
 import com.utn.temptoothlauria.viewmodels.CreateAccViewModel
 
 class CreateAccFragment : Fragment() {
@@ -15,19 +17,18 @@ class CreateAccFragment : Fragment() {
         fun newInstance() = CreateAccFragment()
     }
 
-    private lateinit var viewModel: CreateAccViewModel
+    private lateinit var binding : FragmentCreateAccBinding
+    private val viewModel: CreateAccViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_create_acc, container, false)
+        binding = FragmentCreateAccBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(CreateAccViewModel::class.java)
-        // TODO: Use the ViewModel
+    override fun onStart() {
+        super.onStart()
     }
-
 }
