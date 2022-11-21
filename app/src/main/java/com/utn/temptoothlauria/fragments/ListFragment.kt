@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -44,25 +45,6 @@ class ListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-
-        val db = Firebase.firestore
-
-        // Create a new user with a first and last name
-        val user = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815
-        )
-
-        // Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w(ContentValues.TAG, "Error adding document", e)
-            }
 
         adapter = ValueAdapter(viewModel.getValueList()) { position ->
             var action = ListFragmentDirections.actionListFragmentToExpandedFragment()
