@@ -55,7 +55,7 @@ class ListFragment : Fragment() {
 
         viewModel.valueList.observe(viewLifecycleOwner, Observer {
                 adapter = ValueAdapter(it!!) { position ->
-                    var action = ListFragmentDirections.actionListFragmentToExpandedFragment()
+                    var action = ListFragmentDirections.actionListFragmentToExpandedFragment(position)
                     findNavController().navigate(action)
                 }
                 binding.recValue.layoutManager = LinearLayoutManager(requireContext())

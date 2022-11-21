@@ -68,5 +68,9 @@
         android:id="@+id/expandedFragment"
         android:name="com.utn.temptoothlauria.fragments.ExpandedFragment"
         android:label="fragment_expanded"
-        tools:layout="@layout/fragment_expanded" />
+        tools:layout="@layout/fragment_expanded" >
+        <argument
+            android:name="listPosition"
+            app:argType="integer" />
+    </fragment>
 </navigation>

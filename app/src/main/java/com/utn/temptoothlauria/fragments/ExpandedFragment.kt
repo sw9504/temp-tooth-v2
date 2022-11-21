@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.utn.temptoothlauria.R
 import com.utn.temptoothlauria.databinding.FragmentExpandedBinding
+import com.utn.temptoothlauria.entities.Value
 import com.utn.temptoothlauria.viewmodels.ExpandedViewModel
+import com.utn.temptoothlauria.viewmodels.ListViewModel
 
 class ExpandedFragment : Fragment() {
 
@@ -19,6 +21,8 @@ class ExpandedFragment : Fragment() {
     }
 
     private val viewModel: ExpandedViewModel by viewModels()
+    private val listViewModel : ListViewModel by viewModels()
+
     private lateinit var binding : FragmentExpandedBinding
 
     override fun onCreateView(
@@ -31,6 +35,17 @@ class ExpandedFragment : Fragment() {
         view.visibility = View.INVISIBLE
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        var listPosition = ExpandedFragmentArgs.fromBundle(requireArguments()).listPosition
+        viewModel.setListPosition(listPosition)
+
+        viewModel.setValueObject(listViewModel.getObject(listPosition))
+
+        binding.txtDate.text = viewModel.date
     }
 
 }

@@ -17,6 +17,7 @@ private var COLLECTION_PATH : String = "value"
 private var USER_FIELD : String  = "userId"
 var userId : String = "pedro45"
 private val db = Firebase.firestore
+private var realList : MutableList<Value> = mutableListOf()
 
 class ListViewModel : ViewModel() {
     var valueList : MutableLiveData<MutableList<Value>?> = MutableLiveData()
@@ -27,8 +28,11 @@ class ListViewModel : ViewModel() {
         }
     }
 
+    public fun getObject (position : Int) : Value {
+        return realList[position]
+    }
+
     suspend fun getDatafromFirestore() : MutableList<Value> {
-        var realList : MutableList<Value> = mutableListOf()
         val queryRef = db.collection(COLLECTION_PATH)
 
          try {
