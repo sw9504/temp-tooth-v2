@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "751142731726",
+    "project_id": "temptooth-81813",
+    "storage_bucket": "temptooth-81813.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751142731726:android:dacb76ad4203160ea0359f",
+        "android_client_info": {
+          "package_name": "com.utn.temptoothlauria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751142731726-pk5oc6bk0932dvpua9shkbpe5hl9jbrq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGTFq7rKf8GWF4Wf37qMgLEzyHnt-sGE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751142731726-pk5oc6bk0932dvpua9shkbpe5hl9jbrq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
