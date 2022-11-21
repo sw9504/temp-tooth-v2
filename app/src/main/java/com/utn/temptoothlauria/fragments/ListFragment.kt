@@ -18,6 +18,7 @@ import com.google.firebase.ktx.Firebase
 import com.utn.temptoothlauria.R
 import com.utn.temptoothlauria.adapters.ValueAdapter
 import com.utn.temptoothlauria.databinding.FragmentListBinding
+import com.utn.temptoothlauria.entities.Value
 import com.utn.temptoothlauria.viewmodels.ListViewModel
 
 class ListFragment : Fragment() {
@@ -39,19 +40,25 @@ class ListFragment : Fragment() {
         // Disable bottomBar on this fragment
         val view = requireActivity().findViewById<BottomNavigationView>(R.id.bottomBar)
         view.visibility = View.VISIBLE
-
+        //
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
+        viewModel.getValueList()
 
-        adapter = ValueAdapter(viewModel.getValueList()) { position ->
-            var action = ListFragmentDirections.actionListFragmentToExpandedFragment()
-            findNavController().navigate(action)
+        binding.btnUpdate.setOnClickListener{
+            viewModel.getValueList()
         }
 
-        binding.recValue.layoutManager = LinearLayoutManager(requireContext())
-        binding.recValue.adapter = adapter
+            viewModel.valueList.observe(viewLifecycleOwner, Observer {
+                adapter = ValueAdapter(it) { position ->
+                    var action = ListFragmentDirections.actionListFragmentToExpandedFragment()
+                    findNavController().navigate(action)
+                }
+                binding.recValue.layoutManager = LinearLayoutManager(requireContext())
+                binding.recValue.adapter = adapter
+            })
     }
 }
