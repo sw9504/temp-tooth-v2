@@ -19,8 +19,6 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 
 private val db = Firebase.firestore
-
-
 class BthViewModel : ViewModel() {
     private var list : List<String> = listOf()
 
@@ -28,7 +26,7 @@ class BthViewModel : ViewModel() {
     var hum1 : MutableLiveData<Double> = MutableLiveData()
     var temp2 : MutableLiveData<Double> = MutableLiveData()
     var hum2 : MutableLiveData<Double> = MutableLiveData()
-    var userId : String = ""
+    var userId : String = "pedro45"
 
     fun uploadValues () {
         viewModelScope.launch (Dispatchers.Main) {
@@ -57,9 +55,10 @@ class BthViewModel : ViewModel() {
     }
 
     suspend fun setDataToFirestore () {
+        // Date
         val date : String = "21/11/2022 - Test"
         var value = Value(userId,
-            "",
+            date,
             "T = ${temp1.value!!.toInt()}°C - H = ${hum1.value!!.toInt()}%",
             "T = ${temp2.value!!.toInt()}°C - H = ${hum2.value!!.toInt()}%",
             temp1.value!!.toInt(),hum1.value!!.toInt(),
@@ -81,12 +80,7 @@ class BthViewModel : ViewModel() {
             //sensorShow.text = "ERROR"
             return false
         }
-        else if ((list[0] != "$" && list[6] != "#")) {
-            //sensorShow.text = "ERROR"
-            return false
-        }
-        else
-            return true
+        else return !(list[0] != "$" && list[6] != "#")
     }
 
     fun setListString (receivedData : String) {

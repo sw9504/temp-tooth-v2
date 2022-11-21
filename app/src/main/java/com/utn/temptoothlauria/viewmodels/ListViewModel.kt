@@ -38,6 +38,7 @@ class ListViewModel : ViewModel() {
          try {
             val values = queryRef.whereEqualTo(USER_FIELD,userId).get().await()
              if (values != null) {
+                 realList.clear()
                  for (value in values) {
                      realList.add(value.toObject<Value>())
                      // Ordenar por fecha y hora
