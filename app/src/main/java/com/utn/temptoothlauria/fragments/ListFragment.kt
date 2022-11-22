@@ -1,25 +1,19 @@
 package com.utn.temptoothlauria.fragments
 
-import android.content.ContentValues
-import androidx.lifecycle.ViewModelProvider
+
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import com.utn.temptoothlauria.R
 import com.utn.temptoothlauria.adapters.ValueAdapter
 import com.utn.temptoothlauria.databinding.FragmentListBinding
-import com.utn.temptoothlauria.entities.Value
 import com.utn.temptoothlauria.viewmodels.BthViewModel
 import com.utn.temptoothlauria.viewmodels.ListViewModel
 

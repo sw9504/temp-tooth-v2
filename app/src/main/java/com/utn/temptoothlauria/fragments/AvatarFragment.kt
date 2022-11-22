@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.utn.temptoothlauria.R
@@ -41,6 +43,17 @@ class AvatarFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+
+        viewModel.updateScreen()
+
+        viewModel.userShow.observe(viewLifecycleOwner, Observer {
+            binding.txtUserName.text = viewModel.userList[0].userName
+            binding.txtBio.text = viewModel.userList[0].userEmail
+
+            Glide.with(requireView())
+                .load(viewModel.userList[0].imgUrl)
+                .into(binding.imgAvatar)
+        })
 
         binding.btnLogOut.setOnClickListener {
                 // Dialog for Logout confirmation.

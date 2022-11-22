@@ -1,8 +1,19 @@
 package com.utn.temptoothlauria.viewmodels
 
+import android.util.Log
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import com.utn.temptoothlauria.entities.User
 import com.utn.temptoothlauria.entities.Value
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class ExpandedViewModel : ViewModel() {
     private var listPosition : Int = 0
@@ -13,6 +24,7 @@ class ExpandedViewModel : ViewModel() {
     var hum1 : Int = 0
     var temp2 : Int = 0
     var hum2 : Int = 0
+    lateinit var user : User
 
     fun setListPosition (position : Int) {
         listPosition = position
