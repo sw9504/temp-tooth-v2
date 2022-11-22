@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.utn.temptoothlauria.R
 import com.utn.temptoothlauria.databinding.FragmentSelectorBinding
 import com.utn.temptoothlauria.viewmodels.SelectorViewModel
@@ -40,5 +42,25 @@ class SelectorFragment : Fragment() {
             val action = SelectorFragmentDirections.actionSelectorFragmentToListFragment()
             findNavController().navigate(action)
         }
+
+        // Back press callback to exit app on List
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Dialog for exit confirmation.
+                    // Use material design library
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setTitle("Exit TempTooth App")
+                        .setMessage("Are you sure you want to quit?")
+                        .setNegativeButton("NO") { dialog, which ->
+                            // Nothing
+                        }
+                        .setPositiveButton("YES") { dialog, which ->
+                            activity?.finish()
+                        }
+                        .show()
+                }
+            })
     }
 }

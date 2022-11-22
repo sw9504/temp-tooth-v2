@@ -54,6 +54,7 @@ class AvatarFragment : Fragment() {
                     .setPositiveButton("YES") { dialog, which ->
                         //
                         // Go to LoginFragment with no back stack
+                        viewModel.logOut()
                         val intent = Intent(activity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
