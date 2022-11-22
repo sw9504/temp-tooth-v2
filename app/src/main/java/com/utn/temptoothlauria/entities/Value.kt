@@ -1,8 +1,10 @@
 package com.utn.temptoothlauria.entities
 
+import com.google.firebase.Timestamp
+
 class Value (
     var userId : String,
-    var date : String,
+    var date : Timestamp,
     var sensor1 : String,
     var sensor2 : String,
     var temp1 : Int,
@@ -10,7 +12,7 @@ class Value (
     var temp2 : Int,
     var hum2 : Int
 ) {
-    constructor() : this ("","","","",0,0,0,0)
+    constructor() : this ("", Timestamp.now(),"","",0,0,0,0)
 
     init {
         this.userId = userId!!

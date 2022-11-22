@@ -6,19 +6,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ekn.gruzer.gaugelibrary.Range
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.google.type.Date
 import com.utn.temptoothlauria.entities.Value
-import kotlinx.android.synthetic.main.activity_bth.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import java.lang.Exception
-import java.text.SimpleDateFormat
 
 private val db = Firebase.firestore
+private var auth: FirebaseAuth = Firebase.auth
+
 class BthViewModel : ViewModel() {
     private var list : List<String> = listOf()
 
@@ -26,7 +26,7 @@ class BthViewModel : ViewModel() {
     var hum1 : MutableLiveData<Double> = MutableLiveData()
     var temp2 : MutableLiveData<Double> = MutableLiveData()
     var hum2 : MutableLiveData<Double> = MutableLiveData()
-    var userId : String = "pedro45"
+    var userId : String = "pedro45" // test value
 
     fun uploadValues () {
         viewModelScope.launch (Dispatchers.Main) {
@@ -55,8 +55,9 @@ class BthViewModel : ViewModel() {
     }
 
     suspend fun setDataToFirestore () {
+        userId = getUserUid()
         // Date
-        val date : String = "21/11/2022 - Test"
+        val date = getDate()
         var value = Value(userId,
             date,
             "T = ${temp1.value!!.toInt()}°C - H = ${hum1.value!!.toInt()}%",
@@ -73,6 +74,15 @@ class BthViewModel : ViewModel() {
         catch (e : Exception) {
             Log.w("Firestore", "Error")
         }
+    }
+
+    fun getUserUid () : String {
+        val user = auth.currentUser
+        return user?.uid.toString()
+    }
+
+    fun getDate(): Timestamp {
+        return Timestamp.now()
     }
 
     fun checkValues () : Boolean {

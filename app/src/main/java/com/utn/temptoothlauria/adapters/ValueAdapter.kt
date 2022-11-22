@@ -55,7 +55,7 @@ class ValueAdapter (private var valueList : MutableList<Value>,
     }
 
     override fun onBindViewHolder(holder: ValueHolder, position: Int) {
-        holder.setDate(valueList[position].date)
+        holder.setDate(valueList[position].date.toDate().toString().replace(" GMT-03:00",""))
         holder.setSensor1(valueList[position].sensor1)
         holder.setSensor2(valueList[position].sensor2)
         holder.setImg()

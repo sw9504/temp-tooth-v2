@@ -20,6 +20,7 @@ import com.utn.temptoothlauria.R
 import com.utn.temptoothlauria.adapters.ValueAdapter
 import com.utn.temptoothlauria.databinding.FragmentListBinding
 import com.utn.temptoothlauria.entities.Value
+import com.utn.temptoothlauria.viewmodels.BthViewModel
 import com.utn.temptoothlauria.viewmodels.ListViewModel
 
 class ListFragment : Fragment() {
@@ -30,6 +31,7 @@ class ListFragment : Fragment() {
 
     private lateinit var binding : FragmentListBinding
     private val viewModel: ListViewModel by viewModels()
+    private val bthViewModel: BthViewModel by viewModels()
     lateinit var adapter : ValueAdapter
 
     override fun onCreateView(
@@ -47,6 +49,7 @@ class ListFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        viewModel.setUserId(bthViewModel.getUserUid())
         viewModel.getValueList()
 
         binding.btnUpdate.setOnClickListener{

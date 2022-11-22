@@ -19,7 +19,7 @@ class ExpandedViewModel : ViewModel() {
     }
 
     fun setValueObject (value : Value) {
-        date = value.date
+        date = value.date.toDate().toString().replace(" GMT-03","")
         sensor1 = value.sensor1
         sensor2 = value.sensor2
         temp1 = value.temp1

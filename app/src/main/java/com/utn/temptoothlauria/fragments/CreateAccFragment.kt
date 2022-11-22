@@ -47,7 +47,7 @@ class CreateAccFragment : Fragment() {
             var email : String = viewModel.userEmail
             var password : String = viewModel.userPassword
 
-            if (email.isNotEmpty() && email.isNotEmpty()) {
+            if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
                 auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {  task ->
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information

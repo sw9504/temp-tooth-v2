@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.ktx.toObject
@@ -15,9 +16,10 @@ import java.lang.Exception
 
 private var COLLECTION_PATH : String = "value"
 private var USER_FIELD : String  = "userId"
-var userId : String = "pedro45"
+var userId : String = "pedro45" // test value
 private val db = Firebase.firestore
 private var realList : MutableList<Value> = mutableListOf()
+
 
 class ListViewModel : ViewModel() {
     var valueList : MutableLiveData<MutableList<Value>?> = MutableLiveData()
@@ -32,11 +34,20 @@ class ListViewModel : ViewModel() {
         return realList[position]
     }
 
+    fun setUserId (user : String) {
+        userId = user
+    }
+
     suspend fun getDatafromFirestore() : MutableList<Value> {
         val queryRef = db.collection(COLLECTION_PATH)
 
          try {
-            val values = queryRef.whereEqualTo(USER_FIELD,userId).get().await()
+            val values = queryRef
+                .orderBy("date", Query.Direction.ASCENDING)
+                .whereEqualTo(USER_FIELD,userId)
+                .get()
+                .await()
+
              if (values != null) {
                  realList.clear()
                  for (value in values) {
